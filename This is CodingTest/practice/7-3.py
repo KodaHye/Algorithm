@@ -24,4 +24,3 @@ n, target = list(map(int, input().split()))
 array = list(map(int, input().split()))
 # 이진 탐색 수행 결과 출력
 result = binary_search(array, target, 0, n-1)
-if
