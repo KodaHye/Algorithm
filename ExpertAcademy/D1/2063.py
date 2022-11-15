@@ -1,5 +1,5 @@
-listNum = int(input())
-inputList = list(map(int, input().split()))
+n = int(input())
+lst = list(map(int, input().split()))
+lst.sort()
 
-# inputList
-print(inputList)
+print(lst[n//2])
