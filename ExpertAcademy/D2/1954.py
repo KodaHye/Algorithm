@@ -30,4 +30,6 @@ for test_case in range(1, T + 1):
             x += steps[step % 4][0]
             y += steps[step % 4][1]
 
-    print("#%d" %(test_case), end =' ')
+    print("#%d" %(test_case))
+    for i in range(n):
+        print(*array[i])
