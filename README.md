@@ -13,8 +13,8 @@
 * [chapter9. Shortest Path](https://github.com/KodaHye/Algorithm/blob/master/This%20is%20CodingTest/chapter9.%20ShortestPath/ShortestPath.md)
 
 #### 4. [BaaaaaaaarkingDog 실전 알고리즘](https://blog.encrypted.gg/919)
-* 0x00강 - 오리엔테이션
-* 0x01강 - 기초 코드 작성 요령 I
+* [0x00강 - 오리엔테이션](https://github.com/KodaHye/Algorithm/blob/master/BaaaaaaaarkingDog/0x00.md)
+* [0x01강 - 기초 코드 작성 요령 I](https://github.com/KodaHye/Algorithm/blob/master/BaaaaaaaarkingDog/0x01.md)
 * 0x02강 - 기초 코드 작성 요령 II
 * 0x03강 - 배열
 * 0x04강 - 연결 리스트
