@@ -8,5 +8,7 @@ count0, count1 = 0, 0
 for i in range(len(S)):
     lst.append(S[i])
 
+    count = [] * 1000000
+
 
 
