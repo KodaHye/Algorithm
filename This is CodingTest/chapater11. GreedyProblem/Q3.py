@@ -4,11 +4,9 @@
 
 S = input()
 lst = []
-count0, count1 = 0, 0
+change0 = 0
+change1 = 0
+
 for i in range(len(S)):
     lst.append(S[i])
-
-    count = [] * 1000000
-
-
 

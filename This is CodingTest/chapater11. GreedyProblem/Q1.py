@@ -1,15 +1,16 @@
 # 모험가 길드
-
+# 풀이보고 수정함
 n = int(input())
-lst = list(map(int, input().split()))
+items = list(map(int, input().split()))
+group = 0 # 그룹의 수
+count = 0 # 그룹에 포함된 모험가의 수
 
-init = 0
-count = 0
-lst.sort(reverse=True)
+items.sort()
 
-while(n > 0):
+for item in items:
     count += 1
-    n -= lst[init]
-    init += (lst[init] - 1)
-
-print(count)
+    if(count >= item):
+        group += 1
+        count = 0
+        
+print(group)

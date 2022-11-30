@@ -11,22 +11,21 @@
 
 def solution(food_times, k):
     answer = 0
-
     idx = 0
-    count = 0
 
-    while(count <= sum(food_times)):
-        for i in range(sum(food_times)):
-            count += 1
-            if(food_times[i%3] != 0):
-                food_times[i % 3] -= 1
-                idx = i % 3
-            else:
-                continue
-        if(count == k):
-            break
+    while(k > 0):
+        if(food_times[idx % 3] != 0):
+            food_times[idx % 3] -= 1
+            answer += 1
+            k -= 1
+            idx += 1
+        else:
+            idx += 1
+        # if(answer == k):
+        #     break
     if(''.join(map(str, food_times)) == '0' * len(food_times)):
         return -1
-    return (idx + 1) % 3 + 1
+    else:
+        return idx % 3 + 1
 
 print(solution([3, 1, 2], 5))
