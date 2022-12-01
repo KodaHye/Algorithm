@@ -2,21 +2,13 @@
 * `itertools`
     * 파이썬에서 반복되는 형태의 데이터를 처리하는 기능을 제공하는 라이브러리
     * 순열과 조합 라이브러리 제공
-    
-
 * `heapq`
     * 힙 기능을 제공하는 라이브러리
     * 우선순위 큐 기능을 구현하기 위해 사용
-
-
 * `bisect`
     * 이진 탐색 기능을 제공하는 라이브러리
-
-
 * `collections`
     * 덱, 카운터 등의 유용한 자료구조를 포함하고 있는 라이브러리
-    
-
 * `math`
     * 필수적인 수학적 기능을 제공하는 라이브러리
 
@@ -49,5 +41,29 @@ print(result)
 >> [('A', 'B'), ('A', 'C'), ('B', 'C')]
 ```
 
+
 * `product`
-    * 
+    * `iterable` 객체에서 r개의 데이터를 뽑아 일렬로 나열하는 모든 경우(순열)
+    * 중복허용
+```buildoutcfg
+# 중복을 포함하여 2개를 뽑아 나열하는 모든 경우
+from itertools import product
+
+data = ['A', 'B', 'C'] # 데이터 준비
+result = list(product(data, repeat = 2)) # 2개를 뽑는 모든 순열 구하기(중복허용)
+
+print(result)
+```
+
+
+* `combinations_with_replacement`
+    * `iteralbe` 객체에서 r개의 데이터를 뽑아 순서를 고려하지 않고 나열하는 모든 경우(중복허용)
+```buildoutcfg
+from itertools import combinations_with_replacment
+
+data = ['A', 'B', 'C'] # 데이터 준비
+result = list(combinations_with_replacement(data, 2)) # 2개를 뽑는 모든 조합 구하기(중복 허용)
+print(result)
+>> [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
+```
+
