@@ -1,3 +1,5 @@
+# 문자열 재정렬
+
 S = list(input())
 
 tmpA = []
