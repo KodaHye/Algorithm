@@ -2,6 +2,7 @@ package SWEA;
 
 import java.util.Scanner;
 
+// 홀수만 더하기
 public class d1_2072 {
 
 	public static void main(String[] args) throws Exception{
