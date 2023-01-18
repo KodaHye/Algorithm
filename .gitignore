@@ -19,7 +19,7 @@
 *.zip
 *.tar.gz
 *.rar
-
+*.idea
 .settings
 bin/
 .classpath
