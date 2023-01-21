@@ -1,4 +1,3 @@
-package src;
 import java.util.Scanner;
 
 public class 블랙잭 {
