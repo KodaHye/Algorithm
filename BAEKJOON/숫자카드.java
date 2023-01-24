@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
 
 public class 숫자카드 {
@@ -15,31 +17,24 @@ public class 숫자카드 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
-		int N = Integer.parseInt(br.readLine());
-		int[] arr = new int[N];
-		
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		int M = Integer.parseInt(br.readLine());
-//		int[] search = new int[M];
-		
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < M; i++) {
-			int search = Integer.parseInt(st.nextToken());
-			boolean flag = false;
-			for (int j = 0; j < arr.length; j++) {
-				if(arr[j] == search) {
-					sb.append(1 + " ");
-					flag = true;
-					continue;
-				} 
-			}
-			if(flag  != true) sb.append(0 + " ");
-		}
-		System.out.println(sb);
-	}
+		HashSet<Integer> set1 = new HashSet<>();
 
+		int N = Integer.parseInt(br.readLine());
+		
+		st = new StringTokenizer(br.readLine());
+		for(int i = 0; i < N; i++) {
+			set1.add(Integer.parseInt(st.nextToken()));
+		}
+
+		int M = Integer.parseInt(br.readLine());
+
+		st = new StringTokenizer(br.readLine());
+		for(int i = 0; i < M; i++) {
+			if(set1.contains(Integer.parseInt(st.nextToken()))) sb.append("1 ");
+			else sb.append("0 ");
+		}
+		
+		System.out.println(sb);
+		
+	}
 }
