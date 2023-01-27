@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class 덩치 {
+public class BOJ7568 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

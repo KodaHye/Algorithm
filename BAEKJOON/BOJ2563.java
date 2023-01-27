@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class 색종이 {
+public class BOJ2563 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

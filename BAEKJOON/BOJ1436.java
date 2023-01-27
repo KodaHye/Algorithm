@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 영화감독숌 {
+public class BOJ1436 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

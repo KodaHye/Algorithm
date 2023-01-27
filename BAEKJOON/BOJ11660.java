@@ -3,7 +3,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class 구간합구하기_5 {
+public class BOJ11660 {
 
 	public static void main(String[] args) throws Exception {
 		System.setIn(new FileInputStream("./BAEKJOON/Input/구간합구하기_5.txt"));

@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-public class 듣보잡 {
+public class BOJ1764 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub

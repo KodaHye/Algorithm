@@ -1,21 +1,21 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class 대표값2 {
+public class BOJ2305 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		Integer[] arr = new Integer[5];
-		int total = 0;
-
-		for (int i = 0; i < arr.length; i++) {
+		int n = sc.nextInt();
+		int k = sc.nextInt();
+		Integer[] arr = new Integer[n];
+		
+		for(int i = 0; i < n; i++) 
 			arr[i] = sc.nextInt();
-			total += arr[i];
-		}
+		
 		Arrays.sort(arr);
-
-		System.out.println(total / 5);
-		System.out.println(arr[arr.length / 2]);
+		
+		System.out.println(arr[n-k]);
 	}
+
 }

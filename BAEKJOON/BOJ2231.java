@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 분해합 {
+public class BOJ2231 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

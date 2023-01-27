@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 상수 {
+public class BOJ2908 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

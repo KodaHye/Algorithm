@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 행렬덧셈 {
+public class BOJ2738 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

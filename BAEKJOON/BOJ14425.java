@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class 문자열집합 {
+public class BOJ14425 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub

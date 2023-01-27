@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
 
-public class 숫자카드 {
+public class BOJ10815 {
 	// 상근: N개의 카드를 가지고 있음
 	// 정수 M개가 주어졌을 때, 상근이가 가지고 있는 카드인지 확인
 	// 입력: N(상근이가 가지고 있는 카드의 개수)

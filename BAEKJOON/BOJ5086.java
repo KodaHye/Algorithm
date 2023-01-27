@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class 배수와약수 {
+public class BOJ5086 {
 	// 두 수가 주어졌을 때 3가지 관계 중 어떤 관계인지
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

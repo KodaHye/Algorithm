@@ -4,7 +4,7 @@ import java.util.HashSet;import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-public class 대칭차집합 {
+public class BOJ1269 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 그룹단어체커 {
+public class BOJ1316 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		

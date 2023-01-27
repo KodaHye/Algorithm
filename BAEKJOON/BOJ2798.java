@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class 블랙잭 {
+public class BOJ2798 {
 	/* 
 	 * 카드의 합이 21이 넘지 않는 한도 내에서 가장 크게
 	 * 각 카드: 양수, 딜러: N장의 카드를 모두 숫자가 보이게, 딜러: 숫자M을 외침
