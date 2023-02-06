@@ -1,6 +1,8 @@
+package D3;
+
 import java.util.Scanner;
 
-public class 농작물수확하기 {
+public class SWEA2805 {
 	// 농장의 크기는 항상 홀수
 	// 수확: 농장의 크기에 딱 맞는 정사각형 마름모 형태만 가능
 	// 입력: 테스트 케이스 T

@@ -1,6 +1,8 @@
+package D3;
+
 import java.util.Scanner;
 
-public class 안경이없어 {
+public class SWEA7272 {
 	// 입력: 알파벳 대문자 두 문자열
 	// 출력: 같은 문자로 판결하는가 아닌가
 	public static void main(String[] args) {
