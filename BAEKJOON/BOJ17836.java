@@ -49,16 +49,14 @@ public class BOJ17836 {
 		
 		bfs(0, 0);
 		
-		if(flag == true) {
+		if(!flag) System.out.println("Fail");
+		else {
 			if(time > T) {
 				System.out.println("Fail");
 			} else {
 				System.out.println(time);
 			}
-		} else {
-			System.out.println("Fail");
 		}
-
 	}
 
 	private static void bfs(int r, int c) {
