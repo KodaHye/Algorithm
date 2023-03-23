@@ -41,7 +41,7 @@ public class BOJ1717 {
 			else {
 				if(find(a) == find(b)) sb.append("YES" + "\n");
 				else sb.append("NO" + "\n");
-			};
+			}
 		}
 		
 		System.out.println(sb);
