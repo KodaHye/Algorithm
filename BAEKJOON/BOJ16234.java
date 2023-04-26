@@ -1,82 +1,100 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
-
+import java.io.*;
+import java.util.*;
+/*
+ * 인구 이동
+ */
 public class BOJ16234 {
-    static int N, M;
-    static PriorityQueue<Edge> roads;
-    static int[] parent;
+	static class Point {
+		int r, c;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-        roads = new PriorityQueue<>();
-        parent = new int[N];
-
-        // 간선 구성
-        for(int i=0; i<M; i++) {
-            st = new StringTokenizer(br.readLine());
-            roads.add(new Edge(Integer.parseInt(st.nextToken())-1,
-                    Integer.parseInt(st.nextToken())-1,
-                    Integer.parseInt(st.nextToken())));
-        }
-
-        // parent 구성
-        for(int i=0; i<N; i++) {
-            parent[i] = i;
-        }
-
-        System.out.println(kruskal());
+		public Point(int r, int c) {
+			super();
+			this.r = r;
+			this.c = c;
+		}
+	}
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+    static int N, L, R, map[][];
+    static int dr[] = {-1, 1, 0, 0};
+    static int dc[] = {0, 0, -1, 1};
+    
+    public static void main(String[] args) throws Exception {
+    	st = new StringTokenizer(br.readLine());
+    	N = Integer.parseInt(st.nextToken());
+    	L = Integer.parseInt(st.nextToken());
+    	R = Integer.parseInt(st.nextToken());
+    	
+    	map = new int[N][N];
+    	
+    	for (int r = 0; r < N; r++) {
+    		st = new StringTokenizer(br.readLine());
+			for (int c = 0; c < N; c++) {
+				map[r][c] = Integer.parseInt(st.nextToken());
+			}
+		}
+    	
+    	int count = 0;
+    	
+    	while(true) {
+    		boolean flag = false;
+    		int sum = 0;
+    		boolean v[][] = new boolean[N][N];
+    		
+        	for (int r = 0; r < N; r++) {
+    			for (int c = 0; c < N; c++) {
+    				if(!v[r][c]) {
+        	    		Queue<Point> queue = new LinkedList<>();
+        	    		Queue<Point> queue2 = new LinkedList<>();
+        	    		
+        	    		sum = map[r][c];
+        				
+        				queue.add(new Point(r, c));
+         				queue2.add(new Point(r, c));
+         				
+        				v[r][c] = true;
+        				
+        				while(!queue.isEmpty()) {
+        					Point current = queue.poll();
+        					
+        					int cr = current.r;
+        					int cc = current.c;
+        					
+            				for(int d = 0; d < 4; d++) {
+            					int nr = cr + dr[d];
+            					int nc = cc + dc[d];
+            					
+            					if(!check(nr, nc)) continue;
+            					int tmp = Math.abs(map[nr][nc] - map[cr][cc]);
+            					
+            					if(!v[nr][nc] && tmp >= L && tmp <= R) {
+            						sum += map[nr][nc];
+            						v[nr][nc] = true;
+            						queue.add(new Point(nr, nc));
+            						queue2.add(new Point(nr, nc));
+            					}
+            				}
+        				}
+            			if(queue2.size() > 1) {
+            				flag = true;
+            				int size = queue2.size();
+            				
+            				while(!queue2.isEmpty()) {
+            					Point tmp = queue2.poll();
+            					map[tmp.r][tmp.c] = sum / size;
+            				}
+            			}
+    				}
+    			}
+    		}
+        	if(!flag) break;
+        	count++;
+    	}
+    	
+    	System.out.println(count);
     }
 
-    private static long kruskal() {
-        long sum = 0;
-        Edge ed;
-        int cnt = 0;
-        
-        while(!roads.isEmpty()){
-            ed = roads.poll();
-            // 추가해서 사이클이 만들어지는가
-            if(find(ed.v1) == find(ed.v2)) continue;
-            // 안만들어지면 추가
-            union(ed);
-            cnt++;
-            sum += ed.weight;
-            if(cnt == N - 2) break;
-        }
-        return sum;
-    }
-
-    private static void union(Edge ed) {
-        int p1 = find(ed.v1);
-        int p2 = find(ed.v2);
-        parent[p1] = p2;
-    }
-
-    private static int find(int v) {
-        if(parent[v] == v) return v;
-        return parent[v] = find(parent[v]);
-    }
-
-    static class Edge implements Comparable<Edge> {
-        int v1, v2;
-        int weight;
-
-        public Edge(int v1, int v2, int weight) {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.weight = weight;
-        }
-
-        @Override
-        public int compareTo(Edge o) {
-            return this.weight - o.weight;
-        }
-    }
-
+	private static boolean check(int nr, int nc) {
+		return nr >= 0 && nr < N && nc >= 0 && nc < N;
+	}
 }
