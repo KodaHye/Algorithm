@@ -4,7 +4,6 @@ import java.util.Scanner;
  * 신기한 소수
  */
 public class BOJ2023 {
-	static int sel[];
 	static int N;
 	static StringBuilder sb;
 	
