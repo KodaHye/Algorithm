@@ -28,15 +28,15 @@ public class BOJ2467 {
 		int end = N - 1;
 		
 		while(start < end) {
-			long tmp = arr[end] + arr[start];
+			long tmp = Math.abs(arr[end] + arr[start]);
 			
-			if(tmp < min) {
+			if(tmp <= min) {
+				min = tmp;
 				sb = new StringBuilder();
 				sb.append(arr[start] + " " + arr[end]);
-				min = tmp;
 			}
 			
-			if(tmp >= 0) end--;
+			if(arr[start] + arr[end] > 0) end--;
 			else start++;
 		}
 		System.out.println(sb);
