@@ -40,6 +40,7 @@ public class BOJ16954 {
 				if(map[r][c] == '#') list.add(new Point(r, c, map[r][c]));
 			}
 		}
+		
 		// 욱제 캐릭터 생성
 		map[7][0] = 'O';
 		
@@ -63,7 +64,10 @@ public class BOJ16954 {
 			if(!checkMap()) break; // 욱제의 캐릭터가 없으면 그만
 			
 			Point current = queue.poll();
-			if(current.ch == 'O' && current.r == 0 && current.c == 7) {
+			
+			// 어짜피 위에 벽이 있으면 위로 움직이지 못하고 8X8 배열이므로
+			// 최상단, 가장 오른쪽에 왔을 때는 row가 0일 때임. 따라서 col은 고려하지 않아도 됨
+			if(current.ch == 'O' && current.r == 0) {
 				result = 1;
 				break;
 			}
@@ -82,7 +86,6 @@ public class BOJ16954 {
 						queue.add(new Point(nr, nc, current.ch));
 					}
 				}
-//				print(map);
 			}
 			
 			// 벽일 경우 아래로 내리기
@@ -109,11 +112,5 @@ public class BOJ16954 {
 
 	private static boolean check(int nr, int nc) {
 		return nr >= 0 && nr < 8 && nc >= 0 && nc < 8;
-	}
-
-	private static void print(char[][] map) {
-		for (int i = 0; i < map.length; i++) {
-			System.out.println(Arrays.toString(map[i]));
-		}
 	}
 }
