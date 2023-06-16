@@ -1,7 +1,7 @@
 import java.io.*;
 
 
-public class SOF413 {
+public class Softeer413 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static int N, dp[];
 
