@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -11,7 +10,7 @@ import java.util.StringTokenizer;
 public class BOJ20058 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int N, Q, map[][], copy[][], block;
+	static int N, Q, map[][], block, result;
 	static int dr[] = {1, 0, -1, 0};
 	static int dc[] = {0, 1, 0, -1};
 	
@@ -39,14 +38,6 @@ public class BOJ20058 {
 			checkIce();
 		}
 		
-		int result = 0;
-		
-		for(int r = 0; r < map.length; r++) {
-			for (int c = 0; c < map[r].length; c++) {
-				result += map[r][c];
-			}
-		}
-
 		for(int r = 0; r < map.length; r++) {
 			for(int c = 0; c < map[0].length; c++) {
 				if(map[r][c] != 0) bfs(r, c);
@@ -56,12 +47,9 @@ public class BOJ20058 {
 		System.out.println(result + "\n" + block);
 	}
 
+
 	private static void func(int k) {
 		int range = (int) Math.pow(2, k);
-		
-		int copy[][] = new int[map.length][map[0].length];
-		
-		copy = copyMap(map);
 		
 		for(int r = 0; r < map.length; r += range) {
 			for(int c = 0; c < map[r].length; c += range) {
@@ -73,12 +61,12 @@ public class BOJ20058 {
 
 	private static void checkIce() {
 
-		copy = copyMap(map);
+		Queue<int []> queue = new LinkedList<>();
 		
-		for(int r = 0; r < copy.length; r++) {
-			for(int c = 0; c < copy[r].length; c++) {
+		for(int r = 0; r < map.length; r++) {
+			for(int c = 0; c < map[r].length; c++) {
 				int count = 0;
-				if(copy[r][c] == 0) continue;
+				if(map[r][c] == 0) continue;
 				for(int d = 0; d < 4; d++) {
 					int nr = r + dr[d];
 					int nc = c + dc[d];
@@ -87,26 +75,35 @@ public class BOJ20058 {
 						count++;
 						continue;
 					}
-					if(copy[nr][nc] == 0) count++;
+					if(map[nr][nc] == 0) count++;
 				}
 				
-				if(count >= 2)map[r][c]--;
+				if(count >= 2) {
+					queue.add(new int[] {r, c});
+				}
 			}
+		}
+		
+		while(!queue.isEmpty()) {
+			int[] current = queue.poll();
+			map[current[0]][current[1]]--;
 		}
 	}
 
 	private static void bfs(int r, int c) {
-		Queue<int []> queue = new LinkedList<>();
+		Queue<int[]> queue = new LinkedList<>();
 		boolean v[][] = new boolean[map.length][map[0].length];
 		
 		queue.add(new int[] {r, c});
+		result += map[r][c];
 		
 		v[r][c] = true;
 		
 		int count = 1;
 		
 		while(!queue.isEmpty()) {
-			int current[] = queue.poll();
+			int[] current = queue.poll();
+			map[current[0]][current[1]] = 0;
 			
 			for(int d = 0; d < 4; d++) {
 				
@@ -114,6 +111,7 @@ public class BOJ20058 {
 				int nc = current[1] + dc[d];
 				if(!check(nr, nc)) continue;
 				if(map[nr][nc] != 0 && !v[nr][nc]) {
+					result += map[nr][nc];
 					count++;
 					v[nr][nc] = true;
 					queue.add(new int[] {nr, nc});
@@ -129,23 +127,22 @@ public class BOJ20058 {
 	}
 
 	private static void rotate(int r, int c, int range) {
+		
+		int copy[][] = new int[range][range];
+		
+		for(int i = r; i < r + range; i++) {
+			for(int j = c; j < c + range; j++) {
+				copy[i - r][j - c] = map[i][j];
+			}
+		}
+		
 		for(int i = r; i < r + range; i++) {
 			for(int j = c; j < c + range; j++) {
 				int nr = r - c + j;
 				int nc = range + c - i + r - 1;
 				
-				map[nr][nc] = copy[i][j];
+				map[nr][nc] = copy[i - r][j - c];
 			}
 		}
-	}
-
-	private static int[][] copyMap(int[][] map) {
-		copy = new int[map.length][map[0].length];
-		
-		for (int r = 0; r < map.length; r++) {
-			copy[r] = Arrays.copyOf(map[r], map[r].length);
-		}
-		
-		return copy;
 	}
 }
