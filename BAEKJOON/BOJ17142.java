@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -55,11 +54,7 @@ public class BOJ17142 {
 
 	private static void func(int k, int idx, boolean sel[]) {
 		if(k == M) {
-			int copy[][] = new int[N][N];
-			
-			copy = copyArr();
-			
-			int tmp = virus(copy, sel);
+			int tmp = virus(sel);
 			
 			if(tmp == -1) {
 				if(result == Integer.MIN_VALUE) result = tmp;
@@ -78,7 +73,7 @@ public class BOJ17142 {
 		}
 	}
 
-	private static int virus(int[][] copy, boolean sel[]) {
+	private static int virus(boolean sel[]) {
 		int time = 0;
 		
 		Queue<Point> queue = new LinkedList<>();
@@ -94,7 +89,7 @@ public class BOJ17142 {
 		while(!queue.isEmpty()) {
 			Point current = queue.poll();
 			
-			if(checkMap(copy)) {
+			if(checkMap(v)) {
 				result = Math.min(result, time);
 				return time;
 			}
@@ -104,9 +99,8 @@ public class BOJ17142 {
 				int nc = current.c + dc[d];
 				
 				if(!check(nr, nc)) continue;
-				if(copy[nr][nc] != 1 && !v[nr][nc]) {
+				if(map[nr][nc] != 1 && !v[nr][nc]) {
 					v[nr][nc] = true;
-					copy[nr][nc] = 2;
 					queue.add(new Point(nr, nc, current.cnt + 1));
 					
 					time = current.cnt + 1;
@@ -117,10 +111,10 @@ public class BOJ17142 {
 		return -1;
 	}
 
-	private static boolean checkMap(int[][] copy) {
+	private static boolean checkMap(boolean[][] v) {
 		for(int r = 0; r < N; r++) {
 			for(int c = 0; c < N; c++) {
-				if(copy[r][c] == 0) return false;
+				if(map[r][c] == 0 && !v[r][c]) return false;
 			}
 		}
 		
@@ -129,15 +123,5 @@ public class BOJ17142 {
 
 	private static boolean check(int nr, int nc) {
 		return nr >= 0 && nr < N && nc >= 0 && nc < N;
-	}
-
-	private static int[][] copyArr() {
-		int tmp[][] = new int[N][N];
-		
-		for(int r = 0; r < N; r++) {
-			tmp[r] = Arrays.copyOf(map[r], N);
-		}
-
-		return tmp;
 	}
 }
