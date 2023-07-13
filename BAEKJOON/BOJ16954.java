@@ -61,7 +61,6 @@ public class BOJ16954 {
 		for (int i = 0; i < list.size(); i++) queue.add(new Point(list.get(i).r, list.get(i).c, list.get(i).ch));
 
 		while(!queue.isEmpty()) {
-			if(!checkMap()) break; // 욱제의 캐릭터가 없으면 그만
 			
 			Point current = queue.poll();
 			
@@ -99,15 +98,6 @@ public class BOJ16954 {
 				map[nr][nc] = '#';
 			}
 		}
-	}
-
-	private static boolean checkMap() {
-		for (int r = 0; r < map.length; r++) {
-			for (int c = 0; c < map[r].length; c++) {
-				if(map[r][c] == 'O') return true;
-			}
-		}
-		return false;
 	}
 
 	private static boolean check(int nr, int nc) {
