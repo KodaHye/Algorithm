@@ -22,11 +22,7 @@ public class BOJ11057 {
             return;
         }
 
-        for (int i = 0; i < 10; i++) {
-            dp[2][i] = i + 1;
-        }
-
-        for (int i = 3; i < dp.length; i++) {
+        for (int i = 1; i < dp.length; i++) {
             for (int j = 0; j < dp[i].length; j++) {
                 for(int k = 0; k < j + 1; k++) {
                     dp[i][j] = (dp[i][j] + dp[i - 1][k]) % 10007;
