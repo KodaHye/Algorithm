@@ -1,68 +1,65 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 /*
- * DNA 비밀번호
+DNA 비밀번호
  */
+
 public class BOJ12891 {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static int S, P, count;
-	static String input;
-	static int min[], dna[];
-	
-	public static void main(String[] args) throws Exception {
-		st = new StringTokenizer(br.readLine());
-		S = Integer.parseInt(st.nextToken());
-		P = Integer.parseInt(st.nextToken());
-		
-		dna = new int[4]; // A, C, G, T 저장
-		min = new int[4];
-		
-		input = br.readLine();
-		
-		st = new StringTokenizer(br.readLine());
-		
-		for(int i = 0; i < 4; i++) {
-			min[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		for(int i = 0; i < P; i++) {
-			addDna(i); // i번째 DNA 더하기
-		}
-		
-		if(check(dna)) count++;
+    static int S, P, result;
+    static String str;
+    static int dna[], check[];
 
-		for(int i = 0; i < S - P; i++) {
-			subDna(i); // i번째 DNA 빼기
-			addDna(P + i); // P + i + 1번째 DNA 더하기
-			
-			if(check(dna)) count++;
-		}
-		
-		System.out.println(count);
-	}
+    public static void main(String[] args) throws Exception {
+        initInput();
+        solution();
+    }
 
-	private static void subDna(int i) {
-		if(input.charAt(i) == 'A') dna[0]--;
-		if(input.charAt(i) == 'C') dna[1]--;
-		if(input.charAt(i) == 'G') dna[2]--;
-		if(input.charAt(i) == 'T') dna[3]--;
-	}
-	
-	private static void addDna(int i) {
-		if(input.charAt(i) == 'A') dna[0]++;
-		if(input.charAt(i) == 'C') dna[1]++;
-		if(input.charAt(i) == 'G') dna[2]++;
-		if(input.charAt(i) == 'T') dna[3]++;
-	}
+    public static void solution() {
 
-	private static boolean check(int[] dna) {
-		for(int i = 0; i < 4; i++) {
-			if(dna[i] < min[i]) return false;
-		}
-		
-		return true;
-	}
+        for(int i = 0; i < P; i++) addDna(i);
+        checkStr();
+
+        for(int i = 0; i < S - P; i++) {
+            subDna(i);
+            addDna(i + P);
+            checkStr();
+        }
+        System.out.println(result);
+    }
+
+    private static void subDna(int i) {
+        if(str.charAt(i) == 'A') check[0]--;
+        if(str.charAt(i) == 'C') check[1]--;
+        if(str.charAt(i) == 'G') check[2]--;
+        if(str.charAt(i) == 'T') check[3]--;
+    }
+
+    private static void addDna(int i) {
+        if(str.charAt(i) == 'A') check[0]++;
+        if(str.charAt(i) == 'C') check[1]++;
+        if(str.charAt(i) == 'G') check[2]++;
+        if(str.charAt(i) == 'T') check[3]++;
+    }
+
+    private static void checkStr() {
+        for(int i = 0; i < 4; i++) if(dna[i] > check[i]) return;
+        result++;
+    }
+
+    public static void initInput() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        S = Integer.parseInt(st.nextToken());
+        P = Integer.parseInt(st.nextToken());
+
+        str = br.readLine();
+        st = new StringTokenizer(br.readLine());
+
+        dna = new int[4];
+        check = new int[4];
+
+        for(int i = 0; i < 4; i++) dna[i] = Integer.parseInt(st.nextToken());
+    }
 }
