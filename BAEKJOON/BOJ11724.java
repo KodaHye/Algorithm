@@ -1,66 +1,58 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 /*
- * 연결 요소의 개수
+연결 요소의 개수
  */
+
 public class BOJ11724 {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static int N, M;
-	static ArrayList<Integer> adj[];
-	static boolean v[];
+    static ArrayList<Integer> adj[];
+    static boolean v[];
 
-	public static void main(String[] args) throws Exception {
-		st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+    public static void main(String[] args) throws Exception {
+        initInput();
+        solution();
+    }
 
-		adj = new ArrayList[N + 1];
-		v = new boolean[N + 1];
+    public static void solution() {
+        int result = 0;
+        for(int i = 1; i < adj.length; i++) {
+            if(v[i]) continue;
+            dfs(i);
 
-//		인접리스트 초기화
-		for (int i = 0; i < N + 1; i++) {
-			adj[i] = new ArrayList<>();
-		}
+            result++;
+        }
 
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
+        System.out.println(result);
+    }
 
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
+    public static void dfs(int i) {
+        v[i] = true;
 
-			adj[a].add(b);
-			adj[b].add(a);
-		}
+        for(int next: adj[i]) {
+            if(v[next]) continue;
+            dfs(next);
+        }
+    }
+    public static void initInput() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int count = 0;
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-		for (int i = 1; i < N + 1; i++) {
-			if (!v[i]) {
-				v[i] = true;
-				count++;
+        adj = new ArrayList[N + 1];
+        for(int i = 0; i < adj.length; i++) adj[i] = new ArrayList<>();
 
-				Queue<Integer> queue = new LinkedList<>();
+        v = new boolean[N + 1];
 
-				queue.add(i);
+        for(int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
 
-				while (!queue.isEmpty()) {
-					int current = queue.poll();
-
-					for (Integer integer : adj[current]) {
-						if (!v[integer]) {
-							v[integer] = true;
-							queue.add(integer);
-						}
-					}
-				}
-			}
-		}
-		System.out.println(count);
-	}
+            adj[u].add(v);
+            adj[v].add(u);
+        }
+    }
 }
