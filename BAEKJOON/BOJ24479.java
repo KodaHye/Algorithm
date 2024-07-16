@@ -12,14 +12,15 @@ public class BOJ24479 {
     static StringTokenizer st;
     static int N, M, R;
     static ArrayList<Integer> adj[];
-    static boolean v[];
-    static int order[], cnt = 1;
+    static int v[], cnt = 1;
 
     public static void main(String[] args) throws Exception {
         initInput();
+
+        v[R] = 1;
         dfs(R);
 
-        for(int i = 1; i < order.length; i++) sb.append((order[i]) + "\n");
+        for(int i = 1; i < v.length; i++) sb.append((v[i]) + "\n");
 
         bw.write(sb.toString());
         bw.flush();
@@ -27,12 +28,10 @@ public class BOJ24479 {
     }
 
     public static void dfs(int start) {
-        v[start] = true;
-        order[start] = cnt++;
-
         Collections.sort(adj[start]);
         for(int next: adj[start]) {
-            if(v[next]) continue;
+            if(v[next] != 0) continue;
+            v[next] = ++cnt;
             dfs(next);
         }
     }
@@ -43,8 +42,7 @@ public class BOJ24479 {
         R = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        order = new int[N + 1];
-        v = new boolean[N + 1];
+        v = new int[N + 1];
         for(int i = 0; i < adj.length; i++) adj[i] = new ArrayList<>();
 
         for(int i = 0; i < M; i++) {
