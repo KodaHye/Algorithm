@@ -1,76 +1,61 @@
+import java.io.*;
+import java.util.*;
+
 /*
- * 효율적인 해킹
- * A가 B를 신뢰하는 경우에 A를 해킹하면 B도 해킹할 수 있음
- * 회사의 컴퓨터 신뢰 관계가 주어졌을 때, 한 번에 가장 많은 컴퓨터를 해킹할 수 있는 컴퓨터의 번호 출력
+효율적인 해킹
  */
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
-
 public class BOJ1325 {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static int N, M, arr[];
-	static ArrayList<Integer>[] adjList;
 	static boolean v[];
-	
+	static ArrayList<Integer> adj[];
+	static int ans[];
+
 	public static void main(String[] args) throws Exception {
-		st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		
-		adjList = new ArrayList[N + 1];
-		v = new boolean[N + 1];
-		arr = new int[N + 1];
-		
-		for(int i = 0; i < N + 1; i++) {
-			adjList[i] = new ArrayList<>();
-		}
-		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+
+		adj = new ArrayList[N + 1];
+		ans = new int[N + 1];
+
+		for(int i = 0; i < adj.length; i++) adj[i] = new ArrayList<>();
 		for(int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
-			
-			adjList[a].add(b);
+
+			adj[a].add(b);
 		}
 
-		for(int i = 1; i < N + 1; i++) {
-			v = new boolean[N + 1];
-			bfs(i);
-		}
-		
-		int tmp = 0; 
-		
-		for(int i = 1; i < arr.length; i++) {
-			tmp = tmp < arr[i] ? arr[i] : tmp;
-		}
-		
-		for(int i = 1; i < arr.length; i++) {
-			if(arr[i] == tmp) System.out.print(i + " ");
-		}
-	}
-
-	private static void bfs(int i) {
 		Queue<Integer> queue = new LinkedList<>();
-	
-		queue.add(i);
-		v[i] = true;		
-		
-		while(!queue.isEmpty()) {
-			int currentIdx = queue.poll();
 
-			for(int nextIdx: adjList[currentIdx]) {
-				if(!v[nextIdx]) {
-					v[nextIdx] = true;
-					arr[nextIdx]++;
-					queue.add(nextIdx);
+		int maxValue = Integer.MIN_VALUE;
+
+		for(int i = 1; i < adj.length; i++) {
+			v = new boolean[N + 1];
+			queue.add(i);
+			v[i] = true;
+
+			while(!queue.isEmpty()) {
+				int current = queue.poll();
+
+				for(int next: adj[current]) {
+					if(v[next]) continue;
+					ans[next]++;
+
+					maxValue = Math.max(maxValue, ans[next]);
+					queue.add(next);
+					v[next] = true;
 				}
 			}
 		}
+
+		StringBuilder sb = new StringBuilder();
+		for(int i = 1; i < ans.length; i++) {
+			if(ans[i] == maxValue) sb.append(i + " " );
+		}
+		System.out.println(sb);
 	}
 }
