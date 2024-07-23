@@ -1,96 +1,92 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 /*
 별자리 만들기
  */
+
 public class BOJ4386 {
     static class Point {
-        double x, y;
-
-        public Point(double x, double y) {
-            this.x = x;
-            this.y = y;
+        int idx;
+        double r, c;
+        public Point(int idx, double r, double c) {
+            this.idx = idx;
+            this.r = r;
+            this.c = c;
         }
     }
+    static class Edge {
+        Point s, e;
+        double w;
 
-    static class Edge implements Comparable<Edge> {
-        int s, e;
-        double weight;
-
-        public Edge(int s, int e, double weight) {
+        public Edge(Point s, Point e, double w) {
             this.s = s;
             this.e = e;
-            this.weight = weight;
-        }
-
-        @Override
-        public int compareTo(Edge o) {
-            return Double.compare(this.weight, o.weight);
+            this.w = w;
         }
     }
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static int N, p[];
+    static int p[];
     static ArrayList<Point> points;
-    static PriorityQueue<Edge> queue = new PriorityQueue<>();
-    static boolean v[];
-    static double result;
+    static PriorityQueue<Edge> pq;
 
     public static void main(String[] args) throws Exception {
-        N = Integer.parseInt(br.readLine());
-
-        v = new boolean[N + 1];
-        p = new  int[N + 1];
-        points = new ArrayList<>();
-
-        for(int i = 0; i < p.length; i++) p[i] = i;
-
-        for(int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-
-            double x = Double.parseDouble(st.nextToken());
-            double y = Double.parseDouble(st.nextToken());
-
-            points.add(new Point(x, y));
-        }
-
-        for(int i = 0; i < points.size(); i++) {
-            for(int j = 0; j < points.size(); j++) {
-                if(i == j) continue;
-                queue.add(new Edge(i, j, dist(points.get(i), points.get(j))));
-            }
-        }
-
-        while(N-- > 0) {
-            Edge current = queue.poll();
-
-            if(find(current.s) != find(current.e)) {
-                union(current.s, current.e);
-                result += current.weight;
-                System.out.println(">>>>>>>>>>>" + current.s + " " + current.e);
-            }
-        }
-
-        System.out.printf("%.2f", result);
+        initInput();
+        mst();
     }
 
-    private static int find(int a) {
-        return p[a] = p[a] == a ? a : find(p[a]);
+    public static void mst() {
+        int cnt = 0;
+        double result = 0;
+
+        while(cnt < points.size() - 1) {
+            Edge current = pq.poll();
+
+            if(find(current.s.idx) == find(current.e.idx)) continue;
+            union(current.s.idx, current.e.idx);
+            result += current.w;
+            cnt++;
+        }
+
+        System.out.println(result);
     }
 
-    private static void union(int a, int b) {
+    public static void union(int a, int b) {
         a = find(a);
         b = find(b);
 
         if(a != b) p[b] = a;
     }
 
-    private static double dist(Point point1, Point point2) {
+    public static int find(int a) {
+        return p[a] == a ? a : find(p[a]);
+    }
+    public static void initInput() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        return Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));
+        int n = Integer.parseInt(br.readLine());
+
+        points = new ArrayList<>();
+        pq = new PriorityQueue<>(Comparator.comparing(o -> o.w));
+        p = new int[n];
+        for(int i = 0; i < p.length; i++) p[i] = i;
+        for(int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            double r = Double.parseDouble(st.nextToken());
+            double c = Double.parseDouble(st.nextToken());
+
+            Point current = new Point(i, r, c);
+
+            for(Point p: points) {
+                pq.add(new Edge(current, p, getDis(current, p)));
+            }
+
+            points.add(current);
+        }
+
+    }
+    public static double getDis(Point p1, Point p2) {
+        return Math.sqrt(Math.pow(p1.r - p2.r, 2) + Math.pow(p1.c - p2.c, 2));
     }
 }
