@@ -38,17 +38,6 @@ public class BOJ2887 {
         }
     }
 
-    static int find(int a) {
-        return parents[a] = parents[a] == a ? a : find(parents[a]);
-    }
-
-    static void union(int a, int b) {
-        a = find(a);
-        b = find(b);
-
-        if(a != b) parents[b] = a;
-    }
-
     public static void main(String[] args) throws Exception{
         initInput();
         mst();
@@ -56,6 +45,7 @@ public class BOJ2887 {
     static void initInput() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
+
         N = Integer.parseInt(in.readLine());
         Point[] points = new Point[N];
         parents = new int[N];
@@ -100,5 +90,16 @@ public class BOJ2887 {
         }
 
         System.out.println(result);
+    }
+
+    static int find(int a) {
+        return parents[a] = parents[a] == a ? a : find(parents[a]);
+    }
+
+    static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+
+        if(a != b) parents[b] = a;
     }
 }
