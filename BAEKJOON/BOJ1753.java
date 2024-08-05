@@ -3,31 +3,67 @@ import java.util.*;
 
 /*
 최단경로
-pq 다익스트라로 구현할 때, 방문 처리하는 위치에 주의하기
  */
 
 public class BOJ1753 {
-    static class Node {
+    static int INF = Integer.MAX_VALUE;
+    static class Node implements Comparable<Node> {
         int e, w;
-
         public Node(int e, int w) {
             this.e = e;
             this.w = w;
         }
+
+        @Override
+        public int compareTo(Node o) {
+            return Integer.compare(this.w, o.w);
+        }
+    }
+    static int V, E, S, dis[];
+    static ArrayList<Node> adj[];
+    static PriorityQueue<Node> pq = new PriorityQueue<>();
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws Exception {
+        initInput();
+        dijkstra();
     }
 
-    static boolean v[];
-    static ArrayList<Node> adj[];
-    public static void main(String[] args) throws Exception {
+    static void dijkstra() {
+        Arrays.fill(dis, INF);
+        pq.add(new Node(S, 0));
+
+        dis[S] = 0;
+
+        while(!pq.isEmpty()) {
+            Node current = pq.poll();
+
+            for(Node next: adj[current.e]) {
+                if(dis[next.e] > dis[current.e] + next.w) {
+                    dis[next.e] = dis[current.e] + next.w;
+                    pq.add(new Node(next.e, dis[next.e]));
+                }
+            }
+        }
+
+        for(int i = 1; i < dis.length; i++) sb.append(dis[i] == INF ? "INF": dis[i]).append("\n");
+
+        System.out.print(sb);
+    }
+
+    static void initInput() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int V = Integer.parseInt(st.nextToken());
-        int E = Integer.parseInt(st.nextToken());
+        V = Integer.parseInt(st.nextToken());
+        E = Integer.parseInt(st.nextToken());
+
+        S = Integer.parseInt(br.readLine());
 
         adj = new ArrayList[V + 1];
+        dis = new int[V + 1];
+
         for(int i = 0; i < adj.length; i++) adj[i] = new ArrayList<>();
-        int K = Integer.parseInt(br.readLine());
 
         for(int i = 0; i < E; i++) {
             st = new StringTokenizer(br.readLine());
@@ -38,37 +74,5 @@ public class BOJ1753 {
 
             adj[u].add(new Node(v, w));
         }
-
-        int dis[] = new int[V + 1];
-        v = new boolean[V + 1];
-
-        Arrays.fill(dis, Integer.MAX_VALUE);
-
-        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.w));
-        queue.add(new Node(K, 0));
-        dis[K] = 0;
-
-        while(!queue.isEmpty()) {
-            Node current = queue.poll();
-
-            if(v[current.e]) continue;
-            v[current.e] = true;
-
-            for(Node next: adj[current.e]) {
-
-                if(dis[next.e] > dis[current.e] + next.w) {
-                    dis[next.e] = dis[current.e] + next.w;
-                    queue.add(new Node(next.e, dis[next.e]));
-                }
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 1; i < dis.length; i++) {
-            sb.append((dis[i] == Integer.MAX_VALUE ? "INF" : dis[i]) + "\n");
-        }
-
-        System.out.print(sb);
     }
 }
