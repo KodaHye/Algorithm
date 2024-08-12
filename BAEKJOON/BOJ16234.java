@@ -1,100 +1,102 @@
 import java.io.*;
 import java.util.*;
-/*
- * 인구 이동
- */
-public class BOJ16234 {
-	static class Point {
-		int r, c;
 
-		public Point(int r, int c) {
-			super();
-			this.r = r;
-			this.c = c;
-		}
-	}
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
+/*
+인구 이동
+ */
+
+public class BOJ16234 {
+    static class Point {
+        int r, c;
+        public Point(int r, int c) {
+            this.r = r;
+            this.c = c;
+        }
+    }
     static int N, L, R, map[][];
-    static int dr[] = {-1, 1, 0, 0};
-    static int dc[] = {0, 0, -1, 1};
-    
+    static boolean v[][];
+    static int dir[][] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    static Queue<Point> q, tmp;
+
     public static void main(String[] args) throws Exception {
-    	st = new StringTokenizer(br.readLine());
-    	N = Integer.parseInt(st.nextToken());
-    	L = Integer.parseInt(st.nextToken());
-    	R = Integer.parseInt(st.nextToken());
-    	
-    	map = new int[N][N];
-    	
-    	for (int r = 0; r < N; r++) {
-    		st = new StringTokenizer(br.readLine());
-			for (int c = 0; c < N; c++) {
-				map[r][c] = Integer.parseInt(st.nextToken());
-			}
-		}
-    	
-    	int count = 0;
-    	
-    	while(true) {
-    		boolean flag = false;
-    		int sum = 0;
-    		boolean v[][] = new boolean[N][N];
-    		
-        	for (int r = 0; r < N; r++) {
-    			for (int c = 0; c < N; c++) {
-    				if(!v[r][c]) {
-        	    		Queue<Point> queue = new LinkedList<>();
-        	    		Queue<Point> queue2 = new LinkedList<>();
-        	    		
-        	    		sum = map[r][c];
-        				
-        				queue.add(new Point(r, c));
-         				queue2.add(new Point(r, c));
-         				
-        				v[r][c] = true;
-        				
-        				while(!queue.isEmpty()) {
-        					Point current = queue.poll();
-        					
-        					int cr = current.r;
-        					int cc = current.c;
-        					
-            				for(int d = 0; d < 4; d++) {
-            					int nr = cr + dr[d];
-            					int nc = cc + dc[d];
-            					
-            					if(!check(nr, nc)) continue;
-            					int tmp = Math.abs(map[nr][nc] - map[cr][cc]);
-            					
-            					if(!v[nr][nc] && tmp >= L && tmp <= R) {
-            						sum += map[nr][nc];
-            						v[nr][nc] = true;
-            						queue.add(new Point(nr, nc));
-            						queue2.add(new Point(nr, nc));
-            					}
-            				}
-        				}
-            			if(queue2.size() > 1) {
-            				flag = true;
-            				int size = queue2.size();
-            				
-            				while(!queue2.isEmpty()) {
-            					Point tmp = queue2.poll();
-            					map[tmp.r][tmp.c] = sum / size;
-            				}
-            			}
-    				}
-    			}
-    		}
-        	if(!flag) break;
-        	count++;
-    	}
-    	
-    	System.out.println(count);
+        initInput();
+        solution();
     }
 
-	private static boolean check(int nr, int nc) {
-		return nr >= 0 && nr < N && nc >= 0 && nc < N;
-	}
+    static void solution() {
+        int result = 0;
+        while(true) {
+            if(!initV()) break;
+            result++;
+        }
+
+        System.out.print(result);
+    }
+
+    static boolean initV() {
+        v = new boolean[N][N];
+
+        boolean flag = false;
+
+        for(int r = 0; r < map.length; r++) {
+            for(int c = 0; c < map[0].length; c++) {
+                if(v[r][c]) continue;
+
+                q.add(new Point(r, c));
+                tmp.add(new Point(r, c));
+                v[r][c] = true;
+
+                int sum = map[r][c];
+
+                while(!q.isEmpty()) {
+                    Point current = q.poll();
+
+                    for(int d = 0; d < 4; d++) {
+                        int nr = current.r + dir[d][0];
+                        int nc = current.c + dir[d][1];
+
+                        if(!check(nr, nc) || !isInRange(current.r, current.c, nr, nc) || v[nr][nc]) continue;
+                        flag = true;
+                        q.add(new Point(nr, nc));
+                        tmp.add(new Point(nr, nc));
+                        v[nr][nc] = true;
+                        sum += map[nr][nc];
+                    }
+                }
+
+                sum /= tmp.size();
+                while(!tmp.isEmpty()) {
+                    Point current = tmp.poll();
+                    map[current.r][current.c] = sum;
+                }
+            }
+        }
+
+        return flag;
+    }
+    static boolean isInRange(int r, int c, int nr, int nc) {
+        return Math.abs(map[nr][nc] - map[r][c]) >= L && Math.abs(map[nr][nc] - map[r][c]) <= R;
+    }
+
+    static boolean check(int r, int c) {
+        return r >= 0 && r < N && c >= 0 && c < N;
+    }
+    static void initInput() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        L = Integer.parseInt(st.nextToken());
+        R = Integer.parseInt(st.nextToken());
+
+        q = new LinkedList<>();
+        tmp = new LinkedList<>();
+        map = new int[N][N];
+        for(int r = 0; r < map.length; r++) {
+            st = new StringTokenizer(br.readLine());
+            for(int c = 0; c < map[0].length; c++) {
+                map[r][c] = Integer.parseInt(st.nextToken());
+            }
+        }
+    }
 }
