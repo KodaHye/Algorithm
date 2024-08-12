@@ -17,7 +17,7 @@ public class BOJ12100 {
     }
 
     static void func(int depth, int prevDir) {
-        if(depth == 10) return;
+        if(depth == 5) return;
         for(int d = 0; d < 4; d++) {
 
             int copy[][] = new int[map.length][map[0].length];
