@@ -13,7 +13,6 @@ public class BOJ21610 {
             this.c = c;
         }
     }
-    static Queue<Point> q;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static int N, M, map[][];
@@ -48,22 +47,20 @@ public class BOJ21610 {
 
                 map[c.r][c.c]++;
 
-                q.add(new Point(c.r, c.c));
                 v[c.r][c.c] = true;
             }
 
-            while(!q.isEmpty()) {
-                Point current = q.poll();
+            for(Point c: clouds) {
                 int cnt = 0;
                 for(int dir = 2; dir < dr.length; dir += 2) {
-                    int nr = current.r + dr[dir];
-                    int nc = current.c + dc[dir];
+                    int nr = c.r + dr[dir];
+                    int nc = c.c + dc[dir];
 
                     if(!check(nr, nc) || map[nr][nc] == 0) continue;
                     cnt++;
                 }
 
-                map[current.r][current.c] += cnt;
+                map[c.r][c.c] += cnt;
             }
 
             clouds.clear();
@@ -92,7 +89,6 @@ public class BOJ21610 {
     }
 
     static void initInput() throws Exception {
-        q = new LinkedList<>();
         st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
