@@ -20,7 +20,7 @@ public class BOJ17140 {
         }
     }
     static HashMap<Integer, Integer> hashMap;
-    static ArrayList<Node> list;
+    static PriorityQueue<Node> pq;
     static int r, c, k, rLength, cLength, map[][];
 
     static void solution() {
@@ -42,18 +42,17 @@ public class BOJ17140 {
         for (int c = 0; c < cLength; c++) {
 
             hashMap = new HashMap<>();
-            list = new ArrayList<>();
 
             for (int r = 0; r < tmpRLength; r++) countNumCnt(r, c);
 
-            hashMap.entrySet().forEach(s -> {
-                list.add(new Node(s.getKey(), s.getValue()));
-            });
-            rLength = Math.max(rLength, list.size() * 2);
-            Collections.sort(list);
-            for (int r = 0; r < list.size(); r++) {
-                map[r * 2][c] = list.get(r).num;
-                map[r * 2 + 1][c] = list.get(r).cnt;
+            hashMap.entrySet().forEach(s -> pq.add(new Node(s.getKey(), s.getValue())));
+            rLength = Math.max(rLength, pq.size() * 2);
+
+            int size = pq.size();
+            for (int r = 0; r < size; r++) {
+                Node n = pq.poll();
+                map[r * 2][c] = n.num;
+                map[r * 2 + 1][c] = n.cnt;
             }
         }
     }
@@ -72,16 +71,16 @@ public class BOJ17140 {
         for(int r = 0; r < rLength; r++) {
 
             hashMap = new HashMap<>();
-            list = new ArrayList<>();
 
             for(int c = 0; c < tmpCLength; c++)countNumCnt(r, c);
-            hashMap.entrySet().forEach(s -> list.add(new Node(s.getKey(), s.getValue())));
-            cLength = Math.max(cLength, list.size() * 2);
-            Collections.sort(list);
+            hashMap.entrySet().forEach(s -> pq.add(new Node(s.getKey(), s.getValue())));
+            cLength = Math.max(cLength, pq.size() * 2);
 
-            for(int c = 0; c < list.size(); c++) {
-                map[r][2 * c] = list.get(c).num;
-                map[r][2 * c + 1] = list.get(c).cnt;
+            int size = pq.size();
+            for(int c = 0; c < size; c++) {
+                Node n = pq.poll();
+                map[r][2 * c] = n.num;
+                map[r][2 * c + 1] = n.cnt;
             }
         }
     }
@@ -94,6 +93,8 @@ public class BOJ17140 {
         k = Integer.parseInt(st.nextToken());
 
         map = new int[100][100];
+        pq = new PriorityQueue<>();
+
         for(int r = 0; r < 3; r++) {
             st = new StringTokenizer(br.readLine());
             for(int c = 0; c < 3; c++) {
