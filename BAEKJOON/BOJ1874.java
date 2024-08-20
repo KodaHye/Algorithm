@@ -6,36 +6,36 @@ import java.util.*;
  */
 
 public class BOJ1874 {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
 
-        int num = 1;
         Stack<Integer> stack = new Stack<>();
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < n; i++) {
-            int current = Integer.parseInt(br.readLine());
+        int num = 1;
 
-            if(!stack.isEmpty() && stack.peek() == current) {
+        for(int i = 0; i < N; i++) {
+            int n = Integer.parseInt(br.readLine());
+
+            if(!stack.isEmpty() && stack.peek() == n) {
                 stack.pop();
                 sb.append("-\n");
                 continue;
             }
 
-            while(num <= current) {
+            while(num <= n) {
                 stack.add(num);
                 num++;
                 sb.append("+\n");
             }
 
-            if(stack.peek() == current) {
+            if(stack.peek() == n) {
                 stack.pop();
                 sb.append("-\n");
             }
         }
 
-        if(stack.isEmpty()) System.out.print(sb);
-        else System.out.print("NO");
+        System.out.print(stack.isEmpty() ? sb : "NO");
     }
 }
