@@ -24,9 +24,7 @@ public class BOJ2812 {
             deque.addLast(s.charAt(i));
         }
 
-        while(deque.size() > K) {
-            sb.append(deque.pollFirst());
-        }
+        while(deque.size() > K) sb.append(deque.pollFirst());
 
         System.out.println(sb);
     }
