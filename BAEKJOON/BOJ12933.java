@@ -8,11 +8,9 @@ import java.util.*;
 public class BOJ12933 {
     static class Duck {
         char ch;
-        boolean flag;
 
-        public Duck(char ch, boolean flag) {
+        public Duck(char ch) {
             this.ch = ch;
-            this.flag = flag;
         }
     }
 
@@ -25,9 +23,8 @@ public class BOJ12933 {
             boolean existDuck = false;
             char currentCh = s.charAt(i);
             for(Duck d: list) {
-                if(currentCh == 'q' && !d.flag && d.ch == 'k') {
+                if(currentCh == 'q' && d.ch == 'k') {
                     d.ch = 'q';
-                    d.flag = true;
                     existDuck = true;
                     break;
                 }
@@ -52,7 +49,6 @@ public class BOJ12933 {
 
                 if(currentCh == 'k' && d.ch == 'c') {
                     d.ch = 'k';
-                    d.flag = false;
                     existDuck = true;
                     break;
                 }
@@ -64,7 +60,7 @@ public class BOJ12933 {
                 return;
             }
             if(currentCh == 'q') {
-                list.add(new Duck(currentCh, true));
+                list.add(new Duck(currentCh));
                 continue;
             }
 
