@@ -6,11 +6,12 @@ import java.util.*;
  */
 
 public class BOJ14500 {
-    static int N, M, result, map[][];
+    static int N, M, result, max, map[][];
     static int dr[] = {1, 0, 0}, dc[] = {0, -1, 1};
     static boolean v[][];
 
     static void dfs(int depth, int r, int c, int sum) {
+        if(sum + (3 - depth) * max <= result) return;
         if(depth == 3) {
             result = Math.max(result, sum);
             return;
@@ -59,6 +60,7 @@ public class BOJ14500 {
             st = new StringTokenizer(br.readLine());
             for(int c = 0; c < M; c++) {
                 map[r][c] = Integer.parseInt(st.nextToken());
+                max = Math.max(max, map[r][c]);
             }
         }
 
