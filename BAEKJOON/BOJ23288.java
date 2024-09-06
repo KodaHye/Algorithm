@@ -42,6 +42,7 @@ public class BOJ23288 {
         moveDice();
         setDiceDir(dice[6], map[p.r][p.c]);
     }
+
     static void rotateDice() {
         p.dir = (p.dir + 2) % 4;
     }
